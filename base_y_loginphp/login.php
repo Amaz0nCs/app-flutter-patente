@@ -2,15 +2,15 @@
 header("Content-Type: application/json");
 
 // Configuración de la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "controlvehiculos";
+$servername = "10.1.71.6";
+$username = "usercontrol";
+$password = "5wv283.,Control";
+$dbname = "controlvehiculos"; 
 
-// Conexion
+// Conectar con la base de datos
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificacion
+// Verificar la conexión
 if ($conn->connect_error) {
     echo json_encode([
         "success" => false, 
@@ -32,7 +32,8 @@ if (!isset($data["username"]) || !isset($data["password"])) {
 $username = $conn->real_escape_string($data["username"]);
 $password = $conn->real_escape_string($data["password"]);
 
-$sql = "SELECT * FROM usuario WHERE Username = '$username' AND Password = '$password'";
+// Consulta actualizada para incluir el campo 'Rut'
+$sql = "SELECT Rut, Username FROM usuario WHERE Username = '$username' AND Password = '$password'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
